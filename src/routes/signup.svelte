@@ -1,23 +1,19 @@
 <script>
     import userPool from '../cognito-store'
-    import { CognitoUserAttribute, CognitoUser } from 'amazon-cognito-identity-js';
+    import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
     let familyName;
     let givenName;
     let email;
     let password;
-    const cb = (err, result) => {
+    function handleResponse(err, result) {
         if (err) {
             alert(err.message || JSON.stringify(err));
             return;
         }
-        console.log('user name is ' + result.user.getUsername());
+        location.assign(`/verify#${result.user.getUsername()}`)
     }
 
-    function handleSubmit() {
-        console.log(email)
-        console.log(familyName)
-        console.log(givenName)
-        console.log(password)
+    function createAccount() {
         const emailAttr = new CognitoUserAttribute({
             Name: 'email',
             Value: email
@@ -30,10 +26,10 @@
             Name: 'given_name',
             Value: givenName
         })
-        $userPool.signUp(email, password, [emailAttr, fNameAttr, gNameAttr], null, cb)
+        $userPool.signUp(email, password, [emailAttr, fNameAttr, gNameAttr], null, handleResponse)
     }
 </script>
-<form on:submit|preventDefault={handleSubmit}>
+<form on:submit|preventDefault={createAccount}>
 	<fieldset>
 		<legend>Signup:</legend>
 		<label>
