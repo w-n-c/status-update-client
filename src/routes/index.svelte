@@ -26,10 +26,21 @@
 	}
 </style>
 <script>
+	import { AuthenticationDetails, CognitoUser } from "amazon-cognito-identity-js";
+	import userPool from '../cognito-store';
 	let email;
 	let password;
-	function handleSubmit(e) {
-		// TODO: fetch('')
+	function login() {
+		const authDetails = new AuthenticationDetails({Username: email, Password: password});
+		const user = new CognitoUser({Username: email, Pool: $userPool });
+		user.authenticateUser(authDetails, {
+			onSuccess: function() {
+				location.assign('/blog');
+			},
+			onFailure: function(err) {
+				alert(err);
+			}
+		});
 	}
 </script>
 
@@ -39,7 +50,7 @@
 
 <h1>Welcome!</h1>
 
-<form on:submit|preventDefault={handleSubmit}>
+<form on:submit|preventDefault={login}>
 	<fieldset>
 		<legend>Credentials:</legend>
 		<label>
