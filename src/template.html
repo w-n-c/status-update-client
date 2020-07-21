@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang='en'>
+
 <head>
 	<meta charset='utf-8'>
 	<meta name='viewport' content='width=device-width,initial-scale=1.0'>
@@ -11,6 +12,19 @@
 	<link rel='manifest' href='manifest.json' crossorigin='use-credentials'>
 	<link rel='icon' type='image/png' href='favicon.png'>
 
+	<script defer type="text/javascript" src="lib/axios/dist/axios.standalone.js"></script>
+	<script defer type="text/javascript" src="lib/CryptoJS/rollups/hmac-sha256.js"></script>
+	<script defer type="text/javascript" src="lib/CryptoJS/rollups/sha256.js"></script>
+	<script defer type="text/javascript" src="lib/CryptoJS/components/hmac.js"></script>
+	<script defer type="text/javascript" src="lib/CryptoJS/components/enc-base64.js"></script>
+	<script defer type="text/javascript" src="lib/url-template/url-template.js"></script>
+	<script defer type="text/javascript" src="lib/apiGatewayCore/sigV4Client.js"></script>
+	<script defer type="text/javascript" src="lib/apiGatewayCore/apiGatewayClient.js"></script>
+	<script defer type="text/javascript" src="lib/apiGatewayCore/simpleHttpClient.js"></script>
+	<script defer type="text/javascript" src="lib/apiGatewayCore/utils.js"></script>
+	<script defer type="text/javascript" src="apigClient.js"></script>
+
+
 	<!-- Sapper generates a <style> tag containing critical CSS
 	     for the current page. CSS for the rest of the app is
 	     lazily loaded when it precaches secondary pages -->
@@ -20,6 +34,7 @@
 	     the current page has one -->
 	%sapper.head%
 </head>
+
 <body>
 	<!-- The application will be rendered inside this element,
 	     because `src/client.js` references it -->
@@ -30,4 +45,5 @@
 	     initialise the router -->
 	%sapper.scripts%
 </body>
+
 </html>
