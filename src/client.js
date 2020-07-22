@@ -1,4 +1,4 @@
-import * as sapper from '@sapper/app';
+import * as sapper from '@sapper/app'
 import Amplify from 'aws-amplify'
 
 Amplify.configure({
@@ -11,4 +11,4 @@ Amplify.configure({
 
 sapper.start({
 	target: document.querySelector('#sapper')
-});
+})
