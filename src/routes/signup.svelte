@@ -1,9 +1,9 @@
 <script>
 	import { Auth } from 'aws-amplify'
-	let family_name;
-	let given_name;
-	let email;
-	let password;
+	let family_name
+	let given_name
+	let email
+	let password
 
 	async function signUp() {
 		try {
@@ -13,8 +13,8 @@
 				attributes: {
 					family_name,
 					given_name,
-					email
-				}
+					email,
+				},
 			})
 			location.assign(`/verify#${response.userSub}`)
 		} catch (error) {
@@ -22,26 +22,27 @@
 		}
 	}
 </script>
+
 <form on:submit|preventDefault={signUp}>
 	<fieldset>
 		<legend>Signup:</legend>
 		<label>
 			Email:
-			<input type="email" required bind:value={email}>
+			<input type="email" required bind:value={email} />
 		</label>
 		<label>
 			Password:
-			<input type="password" required bind:value={password}>
+			<input type="password" required bind:value={password} />
 		</label>
-		<br>
+		<br />
 		<label>
 			First Name:
-			<input type="text" required bind:value={given_name}>
+			<input type="text" required bind:value={given_name} />
 		</label>
 		<label>
 			Last Name:
-			<input type="text" required bind:value={family_name}>
+			<input type="text" required bind:value={family_name} />
 		</label>
 	</fieldset>
-	<input type="submit" value="create account">
+	<input type="submit" value="create account" />
 </form>

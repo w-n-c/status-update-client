@@ -1,21 +1,21 @@
 <script>
-	import { goto } from "@sapper/app";
-	import { Auth } from "aws-amplify";
-	let email;
-	let password;
+	import { goto } from '@sapper/app'
+	import { Auth } from 'aws-amplify'
+	let email
+	let password
 	async function login() {
 		try {
-			const user = await Auth.signIn(email, password);
-			goto(`/users/${user.username}`);
+			const user = await Auth.signIn(email, password)
+			goto(`/users/${user.username}`)
 		} catch (error) {
-			console.log("error signing in", error);
+			console.log('error signing in', error)
 		}
 	}
 	async function logout() {
 		try {
-			await Auth.signOut();
+			await Auth.signOut()
 		} catch (error) {
-			console.log("error signing out: ", error);
+			console.log('error signing out: ', error)
 		}
 	}
 </script>
