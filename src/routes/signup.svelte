@@ -1,35 +1,28 @@
 <script>
-    import userPool from '../cognito-store'
-    import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
-    let familyName;
-    let givenName;
-    let email;
-    let password;
-    function handleResponse(err, result) {
-        if (err) {
-            alert(err.message || JSON.stringify(err));
-            return;
-        }
-        location.assign(`/verify#${result.user.getUsername()}`)
-    }
+	import { Auth } from 'aws-amplify'
+	let family_name;
+	let given_name;
+	let email;
+	let password;
 
-    function createAccount() {
-        const emailAttr = new CognitoUserAttribute({
-            Name: 'email',
-            Value: email
-        })
-        const fNameAttr = new CognitoUserAttribute({
-            Name: 'family_name',
-            Value: familyName
-        })
-        const gNameAttr = new CognitoUserAttribute({
-            Name: 'given_name',
-            Value: givenName
-        })
-        $userPool.signUp(email, password, [emailAttr, fNameAttr, gNameAttr], null, handleResponse)
-    }
+	async function signUp() {
+		try {
+			const response = Auth.signUp({
+				username: email,
+				password,
+				attributes: {
+					family_name,
+					given_name,
+					email
+				}
+			})
+			location.assign(`/verify#${response.userSub}`)
+		} catch (error) {
+			console.error('error in signup', error)
+		}
+	}
 </script>
-<form on:submit|preventDefault={createAccount}>
+<form on:submit|preventDefault={signUp}>
 	<fieldset>
 		<legend>Signup:</legend>
 		<label>
@@ -39,16 +32,16 @@
 		<label>
 			Password:
 			<input type="password" required bind:value={password}>
-        </label>
-        <br>
-        <label>
-            First Name:
-            <input type="text" required bind:value={givenName}>
-        </label>
-        <label>
-            Last Name:
-            <input type="text" required bind:value={familyName}>
-        </label>
+		</label>
+		<br>
+		<label>
+			First Name:
+			<input type="text" required bind:value={given_name}>
+		</label>
+		<label>
+			Last Name:
+			<input type="text" required bind:value={family_name}>
+		</label>
 	</fieldset>
 	<input type="submit" value="create account">
 </form>

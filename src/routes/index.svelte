@@ -1,3 +1,25 @@
+<script>
+	import { goto } from "@sapper/app";
+	import { Auth } from "aws-amplify";
+	let email;
+	let password;
+	async function login() {
+		try {
+			const user = await Auth.signIn(email, password);
+			goto(`/users/${user.username}`);
+		} catch (error) {
+			console.log("error signing in", error);
+		}
+	}
+	async function logout() {
+		try {
+			await Auth.signOut();
+		} catch (error) {
+			console.log("error signing out: ", error);
+		}
+	}
+</script>
+
 <style>
 	h1 {
 		text-align: center;
@@ -22,27 +44,9 @@
 		align-items: center;
 	}
 	fieldset label {
-		margin: .5em 0;
+		margin: 0.5em 0;
 	}
 </style>
-<script>
-	import { AuthenticationDetails, CognitoUser } from "amazon-cognito-identity-js";
-	import userPool from '../cognito-store';
-	let email;
-	let password;
-	function login() {
-		const authDetails = new AuthenticationDetails({Username: email, Password: password});
-		const user = new CognitoUser({Username: email, Pool: $userPool });
-		user.authenticateUser(authDetails, {
-			onSuccess: function() {
-				location.assign('/blog');
-			},
-			onFailure: function(err) {
-				alert(err);
-			}
-		});
-	}
-</script>
 
 <svelte:head>
 	<title>Landing</title>
@@ -55,13 +59,16 @@
 		<legend>Credentials:</legend>
 		<label>
 			Email:
-			<input type="email" required bind:value={email}>
+			<input type="email" required bind:value={email} />
 		</label>
 		<label>
 			Password:
-			<input type="password" required bind:value={password}>
+			<input type="password" required bind:value={password} />
 		</label>
 	</fieldset>
-	<input type="submit" value="login">
-	<button><a href="/signup">signup</a></button>
+	<input type="submit" value="login" />
+	<button>
+		<a href="/signup">signup</a>
+	</button>
+	<button on:click={logout}>TEMP LOGOUT</button>
 </form>
