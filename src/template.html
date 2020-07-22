@@ -1,49 +1,90 @@
-<!doctype html>
-<html lang='en'>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<meta name="theme-color" content="#333333" />
 
-<head>
-	<meta charset='utf-8'>
-	<meta name='viewport' content='width=device-width,initial-scale=1.0'>
-	<meta name='theme-color' content='#333333'>
+		%sapper.base%
 
-	%sapper.base%
+		<link rel="stylesheet" href="global.css" />
+		<link
+			rel="manifest"
+			href="manifest.json"
+			crossorigin="use-credentials"
+		/>
+		<link rel="icon" type="image/png" href="favicon.png" />
 
-	<link rel='stylesheet' href='global.css'>
-	<link rel='manifest' href='manifest.json' crossorigin='use-credentials'>
-	<link rel='icon' type='image/png' href='favicon.png'>
+		<script
+			defer
+			type="text/javascript"
+			src="lib/axios/dist/axios.standalone.js"
+		></script>
+		<script
+			defer
+			type="text/javascript"
+			src="lib/CryptoJS/rollups/hmac-sha256.js"
+		></script>
+		<script
+			defer
+			type="text/javascript"
+			src="lib/CryptoJS/rollups/sha256.js"
+		></script>
+		<script
+			defer
+			type="text/javascript"
+			src="lib/CryptoJS/components/hmac.js"
+		></script>
+		<script
+			defer
+			type="text/javascript"
+			src="lib/CryptoJS/components/enc-base64.js"
+		></script>
+		<script
+			defer
+			type="text/javascript"
+			src="lib/url-template/url-template.js"
+		></script>
+		<script
+			defer
+			type="text/javascript"
+			src="lib/apiGatewayCore/sigV4Client.js"
+		></script>
+		<script
+			defer
+			type="text/javascript"
+			src="lib/apiGatewayCore/apiGatewayClient.js"
+		></script>
+		<script
+			defer
+			type="text/javascript"
+			src="lib/apiGatewayCore/simpleHttpClient.js"
+		></script>
+		<script
+			defer
+			type="text/javascript"
+			src="lib/apiGatewayCore/utils.js"
+		></script>
+		<script defer type="text/javascript" src="apigClient.js"></script>
 
-	<script defer type="text/javascript" src="lib/axios/dist/axios.standalone.js"></script>
-	<script defer type="text/javascript" src="lib/CryptoJS/rollups/hmac-sha256.js"></script>
-	<script defer type="text/javascript" src="lib/CryptoJS/rollups/sha256.js"></script>
-	<script defer type="text/javascript" src="lib/CryptoJS/components/hmac.js"></script>
-	<script defer type="text/javascript" src="lib/CryptoJS/components/enc-base64.js"></script>
-	<script defer type="text/javascript" src="lib/url-template/url-template.js"></script>
-	<script defer type="text/javascript" src="lib/apiGatewayCore/sigV4Client.js"></script>
-	<script defer type="text/javascript" src="lib/apiGatewayCore/apiGatewayClient.js"></script>
-	<script defer type="text/javascript" src="lib/apiGatewayCore/simpleHttpClient.js"></script>
-	<script defer type="text/javascript" src="lib/apiGatewayCore/utils.js"></script>
-	<script defer type="text/javascript" src="apigClient.js"></script>
-
-
-	<!-- Sapper generates a <style> tag containing critical CSS
+		<!-- Sapper generates a <style> tag containing critical CSS
 	     for the current page. CSS for the rest of the app is
 	     lazily loaded when it precaches secondary pages -->
-	%sapper.styles%
+		%sapper.styles%
 
-	<!-- This contains the contents of the <svelte:head> component, if
+		<!-- This contains the contents of the <svelte:head> component, if
 	     the current page has one -->
-	%sapper.head%
-</head>
+		%sapper.head%
+	</head>
 
-<body>
-	<!-- The application will be rendered inside this element,
+	<body>
+		<!-- The application will be rendered inside this element,
 	     because `src/client.js` references it -->
-	<div id='sapper'>%sapper.html%</div>
+		<div id="sapper">%sapper.html%</div>
 
-	<!-- Sapper creates a <script> tag containing `src/client.js`
+		<!-- Sapper creates a <script> tag containing `src/client.js`
 	     and anything else it needs to hydrate the app and
 	     initialise the router -->
-	%sapper.scripts%
-</body>
-
+		%sapper.scripts%
+	</body>
 </html>
