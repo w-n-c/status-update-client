@@ -7,7 +7,7 @@ export default async () => {
 	return apiMethodsBuilder(token, username)
 }
 
-const apiMethodsBuilder = (token, userId) => {
+const apiMethodsBuilder = (token, id) => {
 	// eslint-disable-next-line no-undef
 	const aws = apigClientFactory.newClient()
 	const options = { headers: { Authorization: token }}
@@ -18,11 +18,13 @@ const apiMethodsBuilder = (token, userId) => {
 		},
 		statuses: {
 			get: async () => aws.statusesGet({}, null, options),
-			post: async (status) => aws.statusesPost({}, { userId, ...status }, options)
+			post: async (status) => aws.statusesPost({}, { UserId: id, ...status }, options)
 		},
 		users: {
 			get: async () => aws.usersGet({}, null, options),
-			getById: async (id) => aws.usersIdGet({ id }, null, options)
+			getById: async (id) => aws.usersIdGet({ id }, null, options),
+			// TODO parse id from route
+			getStatuses: async () => aws.usersIdStatusesGet({ id }, null, options)
 		}
 	})
 }
