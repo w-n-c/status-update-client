@@ -14,6 +14,7 @@
 	async function postStatus(status) {
 		const api = await apiBuilder()
 		await api.statuses.post(status)
+		statuses = [status, ...statuses]
 		creatingStatus = false
 	}
 </script>
