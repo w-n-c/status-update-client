@@ -1,24 +1,37 @@
-<script>
+<script context="module">
 	import apiBuilder from '../../api'
-	const fetchData = async () => {
+	export async function preload() {
 		const api = await apiBuilder()
 		const response = await api.users.get()
-		return response.data
+		return { users: response.data }
 	}
 </script>
 
-{#await fetchData()}
-	<p>...loading user list</p>
-{:then users}
-	<ul>
-		{#each users as user}
-			<li>
-				<a href={`./${user.username}`}>
-					View {user.given_name} {user.family_name}'s Profile
-				</a>
-			</li>
-		{/each}
-	</ul>
-{:catch error}
-	<p style="color: red">{error.message}</p>
-{/await}
+<script>
+	export let users
+</script>
+
+<ul>
+	{#each users as user}
+		<li>
+			<a rel="prefetch" href={`/users/${user.username}`}>
+				View {user.given_name} {user.family_name}'s Profile
+			</a>
+			{#if typeof user.status == 'string'}
+				<div>{user.status}</div>
+			{:else}
+				<section>
+					<h4>
+						{user.status.EventId.Type}: {user.status.EventId.Title}
+					</h4>
+					<p>
+						Progression: {user.status.Progression}
+						<br />
+						Note: {user.status.Note}
+					</p>
+				</section>
+			{/if}
+			<div />
+		</li>
+	{/each}
+</ul>
