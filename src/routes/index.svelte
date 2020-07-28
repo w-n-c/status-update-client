@@ -3,38 +3,32 @@
 	import { Auth } from 'aws-amplify'
 	let email
 	let password
+	let error = ''
 	async function login() {
 		try {
 			const user = await Auth.signIn(email, password)
 			goto(`/users/${user.username}`)
-		} catch (error) {
-			console.log('error signing in', error)
-		}
-	}
-	async function logout() {
-		try {
-			await Auth.signOut()
-		} catch (error) {
-			console.log('error signing out: ', error)
+		} catch (err) {
+			error = err.message
 		}
 	}
 </script>
 
 <style>
+	input[type='submit'] {
+		cursor: pointer;
+	}
+	button a {
+		text-decoration: none;
+	}
 	h1 {
 		text-align: center;
 		margin: 0 auto;
-		font-size: 2.8em;
-		text-transform: uppercase;
+		font-size: 3em;
 		font-weight: 700;
 		margin: 0 0 0.5em 0;
 	}
 
-	@media (min-width: 480px) {
-		h1 {
-			font-size: 4em;
-		}
-	}
 	legend {
 		font-size: 1.2em;
 	}
@@ -45,6 +39,9 @@
 	}
 	fieldset label {
 		margin: 0.5em 0;
+	}
+	.error {
+		color: red;
 	}
 </style>
 
@@ -65,10 +62,10 @@
 			Password:
 			<input type="password" required bind:value={password} />
 		</label>
+		<div class="error">{error}</div>
 	</fieldset>
 	<input type="submit" value="login" />
 	<button>
 		<a href="/signup">signup</a>
 	</button>
-	<button on:click={logout}>TEMP LOGOUT</button>
 </form>
