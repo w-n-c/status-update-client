@@ -12,6 +12,7 @@ const apiMethodsBuilder = (token, id) => {
 	const aws = apigClientFactory.newClient()
 	const options = { headers: { Authorization: token }}
 	return ({
+		currentUser: id,
 		events: {
 			get: async () => aws.eventsGet({}, null, options),
 			post: async (body) => aws.eventsPost({}, body, options)
@@ -21,10 +22,16 @@ const apiMethodsBuilder = (token, id) => {
 			post: async (status) => aws.statusesPost({}, { UserId: id, ...status }, options)
 		},
 		users: {
-			get: async () => aws.usersGet({}, null, options),
+			get: async () => {
+				const res = await aws.usersGet({}, null, options)
+				res.data.forEach(user => {
+					if (typeof user.status == 'object')
+						user.status.EventId = JSON.parse(user.status.EventId)
+				})
+				return res
+			},
 			getById: async (id) => aws.usersIdGet({ id }, null, options),
-			// TODO parse id from route
-			getStatuses: async () => aws.usersIdStatusesGet({ id }, null, options)
+			getStatuses: async (user = { id }) => aws.usersIdStatusesGet(user, null, options)
 		}
 	})
 }
